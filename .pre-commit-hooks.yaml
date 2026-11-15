@@ -1,0 +1,28 @@
+# Hook definitions consumed by https://pre-commit.com
+# In the target repo's .pre-commit-config.yaml:
+#   repos:
+#     - repo: https://github.com/yuezihao85/keyhound
+#       rev: v0.1.0
+#       hooks:
+#         - id: keyhound
+
+- id: keyhound
+  name: keyhound secret scan
+  description: Detect leaked credentials in staged files (installed console script).
+  entry: keyhound
+  language: python
+  types: [text]
+  pass_filenames: true
+  require_serial: false
+
+- id: keyhound-system
+  name: keyhound secret scan (system python)
+  description: >
+    Uses a `keyhound` command already installed on PATH (pip install .),
+    so pre-commit does not create a virtualenv. Enable this INSTEAD of
+    `keyhound`, never both. `language: system` runs in the target repo,
+    so the entry must be a PATH command, not a relative script path.
+  entry: keyhound
+  language: system
+  types: [text]
+  pass_filenames: true

@@ -1,0 +1,21 @@
+# Drop this into the repository you want to protect.
+# Requires: pip install pre-commit && pre-commit install
+repos:
+  - repo: https://github.com/yuezihao85/keyhound
+    rev: v0.1.0
+    hooks:
+      # Recommended: pre-commit installs the package from setup.py.
+      - id: keyhound
+        # Only fail on high/critical so medium heuristic noise stays informational.
+        args: ["--fail-on", "high", "--color", "never"]
+
+  # Alternative if you already have a checkout of keyhound locally and want
+  # zero install: use the system-python hook instead of the block above.
+  # - repo: local
+  #   hooks:
+  #     - id: keyhound-local
+  #       name: keyhound (local checkout)
+  #       entry: python /path/to/keyhound/keyhound-cli.py
+  #       language: system
+  #       types: [text]
+  #       pass_filenames: true

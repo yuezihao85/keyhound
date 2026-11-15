@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Generated scan artifacts
+keyhound.sarif
+keyhound.json
+out.sarif
+*.sarif.tmp
+
+# Local virtualenvs
+.venv/
+venv/
+env/
+
+# NOTE: .keyhound.json and .keyhound-baseline.json are intentionally NOT
+# ignored -- both are meant to be committed and shared with the team.

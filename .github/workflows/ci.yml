@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: py${{ matrix.python-version }} / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.7", "3.9", "3.11", "3.13"]
+        exclude:
+          # setup-python has no CPython 3.7 build for the arm64 macOS runners.
+          - os: macos-latest
+            python-version: "3.7"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Unit tests (stdlib only, no install)
+        run: python -m unittest discover -s tests -v
+
+      - name: Clone-and-run smoke test
+        run: python keyhound-cli.py --version
+
+      - name: Self-scan with the committed baseline
+        run: python keyhound-cli.py --color never .
+
+      - name: SARIF round-trip
+        shell: bash
+        run: |
+          python keyhound-cli.py --no-baseline --format sarif \
+            --output keyhound.sarif tests/fixtures/sample.env || true
+          python - <<'PY'
+          import json, sys
+          with open("keyhound.sarif", "r", encoding="utf-8") as handle:
+              doc = json.load(handle)
+          assert doc["version"] == "2.1.0", doc["version"]
+          run = doc["runs"][0]
+          assert run["tool"]["driver"]["name"] == "keyhound"
+          assert run["results"], "expected findings in the fixture"
+          for item in run["results"]:
+              assert "partialFingerprints" in item
+          print("SARIF OK:", len(run["results"]), "results")
+          PY
+
+      - name: JSON output is parseable
+        shell: bash
+        run: |
+          python keyhound-cli.py --no-baseline --format json \
+            --output keyhound.json tests/fixtures/sample.env || true
+          python - <<'PY'
+          import json
+          with open("keyhound.json", "r", encoding="utf-8") as handle:
+              doc = json.load(handle)
+          assert doc["tool"] == "keyhound"
+          assert doc["summary"]["total"] == len(doc["findings"])
+          print("JSON OK:", doc["summary"])
+          PY
+
+  clean:
+    name: clean-file false-positive guard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: A clean fixture must produce zero findings
+        run: python keyhound-cli.py --no-baseline --color never tests/fixtures/clean.py

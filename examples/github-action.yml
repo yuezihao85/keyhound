@@ -1,0 +1,48 @@
+# Copy into .github/workflows/secret-scan.yml of the repository you protect.
+name: Secret scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write   # required by upload-sarif
+
+jobs:
+  keyhound:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Checkout keyhound
+        uses: actions/checkout@v4
+        with:
+          repository: yuezihao85/keyhound
+          ref: v0.1.0
+          path: .keyhound-tool
+
+      - name: Scan and produce SARIF
+        # `|| true` keeps the report available even when findings fail the step.
+        run: |
+          python .keyhound-tool/keyhound-cli.py \
+            --format sarif --output keyhound.sarif . || true
+
+      - name: Upload SARIF to GitHub Code Scanning
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: keyhound.sarif
+          category: keyhound
+
+      - name: Fail the build on findings
+        # Re-run without SARIF upload to get the real exit code in the log.
+        run: python .keyhound-tool/keyhound-cli.py --color never .

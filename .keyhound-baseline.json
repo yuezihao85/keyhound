@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "tool": "keyhound",
+  "generated_at": "2026-11-15T10:14:13Z",
+  "count": 16,
+  "findings": [
+    {
+      "fingerprint": "61d6eac494ca3cf4",
+      "rule_id": "connection-string-password",
+      "path": "README.md",
+      "line": 352,
+      "masked": "****",
+      "severity": "critical",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "ebfe8e88cf711dca",
+      "rule_id": "generic-high-entropy-secret",
+      "path": "examples/library_usage.py",
+      "line": 29,
+      "masked": "9fB3************jD",
+      "severity": "medium",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "137d6b5f47627e2f",
+      "rule_id": "aws-access-key-id",
+      "path": "tests/fixtures/sample.env",
+      "line": 2,
+      "masked": "AKIA************LE",
+      "severity": "critical",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "2855fa5c2c0bae6a",
+      "rule_id": "aws-secret-access-key",
+      "path": "tests/fixtures/sample.env",
+      "line": 3,
+      "masked": "wJal************EY",
+      "severity": "critical",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "9280b22e213cb947",
+      "rule_id": "github-pat",
+      "path": "tests/fixtures/sample.env",
+      "line": 4,
+      "masked": "ghp_************89",
+      "severity": "critical",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "1c1c9838aee1cb44",
+      "rule_id": "stripe-live-key",
+      "path": "tests/fixtures/sample.env",
+      "line": 5,
+      "masked": "sk_l************aZ",
+      "severity": "critical",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "0daea3d63e1863ce",
+      "rule_id": "slack-webhook",
+      "path": "tests/fixtures/sample.env",
+      "line": 6,
+      "masked": "http************00",
+      "severity": "high",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "44d1c74f3d2ce440",
+      "rule_id": "connection-string-password",
+      "path": "tests/fixtures/sample.env",
+      "line": 7,
+      "masked": "*******",
+      "severity": "critical",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "9eca73402a3ff2ba",
+      "rule_id": "generic-high-entropy-secret",
+      "path": "tests/fixtures/sample.env",
+      "line": 8,
+      "masked": "9fB3************jD",
+      "severity": "medium",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "9c853d4769c496ca",
+      "rule_id": "aws-access-key-id",
+      "path": "tests/test_keyhound.py",
+      "line": 60,
+      "masked": "AKIA************LE",
+      "severity": "critical",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "efad9c4485f3a608",
+      "rule_id": "private-key-block",
+      "path": "tests/test_keyhound.py",
+      "line": 69,
+      "masked": "-----BEGIN RSA PRIVATE KEY-----",
+      "severity": "critical",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "8fbbf14cc0b223f9",
+      "rule_id": "github-pat",
+      "path": "tests/test_keyhound.py",
+      "line": 139,
+      "masked": "ghp_************89",
+      "severity": "critical",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "bd0519fd5dd16978",
+      "rule_id": "private-key-block",
+      "path": "tests/test_keyhound.py",
+      "line": 154,
+      "masked": "-----BEGIN OPENSSH PRIVATE KEY-----",
+      "severity": "critical",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "356136273315d564",
+      "rule_id": "jwt",
+      "path": "tests/test_keyhound.py",
+      "line": 162,
+      "masked": "eyJh************5c",
+      "severity": "medium",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "f89da133b76d8af8",
+      "rule_id": "generic-high-entropy-secret",
+      "path": "tests/test_keyhound.py",
+      "line": 195,
+      "masked": "9fB3************jD",
+      "severity": "medium",
+      "reason": "synthetic fixtures and documentation examples"
+    },
+    {
+      "fingerprint": "4e69f8bee9e500e4",
+      "rule_id": "slack-webhook",
+      "path": "tests/test_keyhound.py",
+      "line": 221,
+      "masked": "http************00",
+      "severity": "high",
+      "reason": "synthetic fixtures and documentation examples"
+    }
+  ]
+}
